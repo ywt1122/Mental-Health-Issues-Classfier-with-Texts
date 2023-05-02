@@ -1,0 +1,67 @@
+# Import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.neighbors import KNeighborsClassifier
+
+df = pd.read_csv('mental_health.csv')
+df.head()
+df.shape
+
+# Check data types
+df.dtypes
+
+# Check missing values
+df.isnull().sum()
+
+# Check the distribution of mental health status
+label_0_count = df[df['label']==0].shape[0]
+label_1_count = df[df['label']==1].shape[0]
+print("Number of entries with label = 0: {}".format(label_0_count))
+print("Number of entries with label = 1: {}".format(label_1_count))
+
+# Vectorize "text" using CountVectorizer
+# Documentation 1: https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html
+# Documentation 2: https://www.geeksforgeeks.org/using-countvectorizer-to-extracting-features-from-text/
+
+vectorizer = CountVectorizer()
+X = vectorizer.fit(df['text'])
+print("Vocabulary: ", vectorizer.vocabulary_)
+
+features = vectorizer.transform(df['text'])
+features = features.toarray()
+
+print(features.shape)
+
+# Split data into training set and testing set
+x_train, x_test, y_train, y_test = train_test_split(features, df['label'], train_size=0.8, random_state=0)
+print("Number of entries in the training set: {}".format(x_train.shape[0]))
+print("Number of entries in the testing set: {}".format(x_test.shape[0]))
+
+# Get the vocabulary from the CountVectorizer object
+vocabulary = vectorizer.get_feature_names_out()
+
+# Sum the counts of each word across all documents
+word_counts = np.sum(features, axis=0)
+
+# Sort the words in descending order of frequency
+sorted_idx = np.argsort(word_counts)[::-1]
+
+# Get the top 20 words by frequency
+top_words = [vocabulary[i] for i in sorted_idx[:20]]
+top_counts = [word_counts[i] for i in sorted_idx[:20]]
+
+# Plot the frequency of the top 20 words
+plt.barh(top_words, top_counts)
+plt.title('Frequency of Top 20 Words')
+plt.xlabel('Frequency')
+plt.ylabel('Word')
+plt.show()
+
+y_train = y_train.to_numpy()
+y_test = y_test.to_numpy()
+
+
