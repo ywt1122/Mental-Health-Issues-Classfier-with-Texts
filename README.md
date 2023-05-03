@@ -33,14 +33,14 @@ The Word2Vec algorithm was used to generate feature vectors for each text in the
 ## BERT and DistilBERT embeddings with NN
 BERT is based on the Transformer architecture, a type of deep learning model that is designed to handle sequential data. It learns contextual embeddings through a process called pre-training, which involves masked language modeling and next sentence prediction tasks. The key differences between BERT and Word2Vec are listed below.
 
-## Contextual Understanding
-While Word2Vec captures context through a fixed window size, BERT is capable of understanding context bidirectionally, resulting in a more accurate representation of word meanings.
+- ## Contextual Understanding
+  While Word2Vec captures context through a fixed window size, BERT is capable of understanding context bidirectionally, resulting in a more accurate representation of word meanings.
 
-## Pre-training
-BERT uses pre-training to learn language representations, allowing it to be fine-tuned for  specific tasks with minimal training data. Word2Vec, on the other hand, requires the entire dataset to learn embeddings.
+- ## Pre-training
+  BERT uses pre-training to learn language representations, allowing it to be fine-tuned for  specific tasks with minimal training data. Word2Vec, on the other hand, requires the entire dataset to learn embeddings.
 
-## Model Complexity
-BERT is a more complex model with a deeper architecture, enabling it to capture intricate relationships between words. Word2Vec's shallow neural network, while effective for simpler tasks, may not be as robust in capturing complex language features.
+- ## Model Complexity
+  BERT is a more complex model with a deeper architecture, enabling it to capture intricate relationships between words. Word2Vec's shallow neural network, while effective for simpler tasks, may not be as robust in capturing complex language features.
 
 ## Neural Network Fine-Tuning
 In order to prevent overfitting in our Neural Network models, we employed two regularization methods: Dropout and L2 Regularization. Dropout involves randomly dropping neurons (i.e. setting the value to zero) during training, which helps prevent co-adaptation and subsequently increases efficiency. L2 regularization, on the other hand, works by adding a penalty term to the loss function that discourages large weight values. The decision to combine both techniques was further supported by the findings of "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" (Srivastava et al., 2014), which demonstrated that the L2+dropout method had the second lowest error rate, as presented in the table below. We attempted to implement various combinations of regularization methods, including dropout, L2, and dropout + max_norm, but they resulted in lower accuracy compared to dropout + L2.
